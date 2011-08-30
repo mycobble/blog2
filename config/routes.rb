@@ -1,17 +1,12 @@
-Blog2::Application.routes.draw do
+#new routes
 
-ActionController::Routing::Routes.draw do |map|  
-  map.signup 'signup', :controller => 'users', :action => 'new'
-  map.logout 'logout', :controller => 'sessions', :action => 'destroy'
-  map.login 'login', :controller => 'sessions', :action => 'new'
-  map.resources :sessions
-  map.resources :users 
-  map.resources :posts  
-  map.resources :friendships
-  map.connect ':controller/:action/:id'  
-  map.connect ':controller/:action/:id.:format'  
-  map.root :controller => "posts"
-end 
+Blog2::Application.routes.draw do
+	root :to => "posts#index"
+	resources :sessions, :users, :friendships, :posts
+	match '/signup', :to => 'users#new', :as => 'signup'
+	match '/logout', :to => 'sessions#destroy', :as => 'logout'
+	match '/login', :to => 'sessions#new', :as => 'login'
+	match '/:controller(/:action(/:id))'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
